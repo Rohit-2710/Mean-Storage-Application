@@ -34,8 +34,20 @@ class UserService {
   }
   async loginUser(data) {
     if (Object.keys(data).length > 0) {
-      if (auth.comparePassword(data.password)) {
-      }
+      return this.db.createConnection("user").then(async (dbModel) => {
+        let response = await dbModel.findOne({ email: data.email }).lean();
+        return new Promise((resolve, reject) => {
+          if (auth.comparePassword(data.password, response.password)) {
+            const generatedToken = auth.generateToken({
+              email: response.email,
+            });
+            response.token = generatedToken;
+            resolve(response);
+          } else {
+            reject("Wrong password");
+          }
+        });
+      });
     }
   }
 }

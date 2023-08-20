@@ -16,7 +16,7 @@ class Auth {
   }
 
   generateToken(data) {
-    if (Object.keys(data).lenght > 0) {
+    if (Object.keys(data).length > 0) {
       return jwt.sign(data, process.env.PRIVATEKEY);
     }
   }

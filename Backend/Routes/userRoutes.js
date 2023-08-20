@@ -8,7 +8,7 @@ class UserRoutes {
 
   allRoutes() {
     this.app.route("/register").post(userController.registerUser);
-    this.app.route("/login").post();
+    this.app.route("/login").post(userController.userLogin);
   }
   configRoutes() {
     this.allRoutes();
