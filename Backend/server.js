@@ -20,9 +20,7 @@ class Server {
           `Server listening on ${process.env.HOST}/${process.env.PORT}`
         );
       });
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   }
 }
 const server = new Server();

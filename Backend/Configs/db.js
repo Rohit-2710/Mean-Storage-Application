@@ -10,10 +10,19 @@ class DB {
     this.userSchema = this.mongoose.Schema({
       name: String,
       password: String,
-      files: {
-        type: this.mongoose.Schema.Types.ObjectId,
-        ref: "Files",
+      email: {
+        type: String,
+        unique: [true, "Email already exists in Database"],
+        required: [true, "Email not provided"],
+        trim: true,
+        lowercase: true,
       },
+      files: [
+        {
+          type: this.mongoose.Schema.Types.ObjectId,
+          ref: "Files",
+        },
+      ],
     });
 
     this.fileSchema = this.mongoose.Schema({
