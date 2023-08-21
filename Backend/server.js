@@ -1,6 +1,7 @@
 const appConfig = require("./Configs/appConfig");
 const dotenv = require("dotenv");
 const userRoutes = require("./Routes/userRoutes");
+const fileRoutes = require("./Routes/fileRoutes");
 
 class Server {
   constructor() {
@@ -10,6 +11,7 @@ class Server {
   }
   includeRoutes() {
     new userRoutes(this.server.app).configRoutes();
+    new fileRoutes(this.server.app).routeConfig();
   }
 
   startServer() {

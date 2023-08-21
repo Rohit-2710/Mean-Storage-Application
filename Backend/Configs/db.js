@@ -27,7 +27,7 @@ class DB {
 
     this.fileSchema = this.mongoose.Schema({
       file: String,
-      user: String,
+      email: String,
       fileName: String,
       fileType: String,
     });

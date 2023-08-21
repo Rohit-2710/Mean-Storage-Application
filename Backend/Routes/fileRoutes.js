@@ -1,9 +1,16 @@
+const multer = require("multer");
+const uploads = multer();
+const { authVerifyer } = require("./../Middlewares/authMiddleware");
+const fileController = require("./../Controllers/fileController");
+
 class Routes {
   constructor(app) {
     this.app = app;
   }
   appRoutes() {
-    this.app.route("/register").get();
+    this.app
+      .route("/uploadSingle")
+      .post(authVerifyer, uploads.single("file"), fileController.uploadSingle);
     this.app.route("/register").post();
   }
   routeConfig() {

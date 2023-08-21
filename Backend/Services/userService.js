@@ -1,9 +1,9 @@
-const mongooseDB = require("./../Configs/db");
+const mongoDB = require("./../Configs/db");
 const auth = require("./../Controllers/authController");
 
 class UserService {
   constructor() {
-    this.db = new mongooseDB();
+    this.db = new mongoDB();
     this.db.dbConfig();
   }
   async registerUser(data) {
