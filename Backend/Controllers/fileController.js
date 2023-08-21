@@ -4,7 +4,6 @@ class FileController {
   constructor() {}
   async uploadSingle(req, res) {
     try {
-      console.log(req.body);
       const { originalname, buffer } = req.file;
       let data = {};
       data.file = buffer.toString("base64");
@@ -18,11 +17,28 @@ class FileController {
         })
         .catch((err) => {
           res.status(500).json({
-            message: "Error occured while uploading file in err file",
+            message: "Error occured while uploading file",
           });
         });
     } catch (err) {
       res.status(500).json({ message: "Error occured while uploading file" });
+    }
+  }
+  async getAllFiles(req, res) {
+    try {
+      const { email } = req.body;
+      fileService
+        .getAllFiles({ email: email })
+        .then((response) => {
+          res.status(200).json({ data: response });
+        })
+        .catch((err) => {
+          res
+            .status(500)
+            .json({ message: "Error occured while fetching files" });
+        });
+    } catch (err) {
+      res.status(500).json({ message: "Error occured while fetching files" });
     }
   }
 }

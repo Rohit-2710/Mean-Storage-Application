@@ -11,7 +11,7 @@ class Routes {
     this.app
       .route("/uploadSingle")
       .post(authVerifyer, uploads.single("file"), fileController.uploadSingle);
-    this.app.route("/register").post();
+    this.app.route("/allFiles").get(authVerifyer, fileController.getAllFiles);
   }
   routeConfig() {
     this.appRoutes();
