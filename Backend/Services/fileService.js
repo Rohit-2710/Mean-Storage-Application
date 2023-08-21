@@ -36,5 +36,24 @@ class FileUploads {
       });
     });
   }
+  async getFilesByType(data) {
+    return this.db.createConnection("file").then((dbModel) => {
+      return new Promise((resolve, reject) => {
+        dbModel
+          .aggregate([
+            { $match: { email: data.email, fileType: data.fileType } },
+          ])
+          .then((result) => {
+            resolve(result);
+          })
+          .catch((err) => {
+            reject(err);
+          })
+          .finally(() => {
+            this.db.closeConnection();
+          });
+      });
+    });
+  }
 }
 module.exports = new FileUploads();

@@ -41,5 +41,22 @@ class FileController {
       res.status(500).json({ message: "Error occured while fetching files" });
     }
   }
+  async getFilesByType(req, res) {
+    try {
+      const { email, fileType } = req.body;
+      fileService
+        .getFilesByType({ email: email, fileType: fileType })
+        .then((result) => {
+          res.status(200).json({ response: result });
+        })
+        .catch((err) => {
+          res
+            .status(500)
+            .json({ message: "Error occured while fetching files" });
+        });
+    } catch (err) {
+      res.status(500).json({ message: "Error occured while fetching files" });
+    }
+  }
 }
 module.exports = new FileController();

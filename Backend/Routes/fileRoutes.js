@@ -12,6 +12,9 @@ class Routes {
       .route("/uploadSingle")
       .post(authVerifyer, uploads.single("file"), fileController.uploadSingle);
     this.app.route("/allFiles").get(authVerifyer, fileController.getAllFiles);
+    this.app
+      .route("/fileByType")
+      .get(authVerifyer, fileController.getFilesByType);
   }
   routeConfig() {
     this.appRoutes();
