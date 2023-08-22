@@ -58,5 +58,22 @@ class FileController {
       res.status(500).json({ message: "Error occured while fetching files" });
     }
   }
+  async deleteFile(req, res) {
+    try {
+      const { id } = req.body;
+      fileService
+        .deleteFile({ id: id })
+        .then(() => {
+          res.status(204).json();
+        })
+        .catch((err) => {
+          res
+            .status(500)
+            .json({ message: "Error occured while deleting file in promise" });
+        });
+    } catch (err) {
+      res.status(500).json({ message: "Error occured while deleting file" });
+    }
+  }
 }
 module.exports = new FileController();

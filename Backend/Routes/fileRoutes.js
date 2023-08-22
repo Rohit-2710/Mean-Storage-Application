@@ -15,6 +15,9 @@ class Routes {
     this.app
       .route("/fileByType")
       .get(authVerifyer, fileController.getFilesByType);
+    this.app
+      .route("/deleteFile")
+      .delete(authVerifyer, fileController.deleteFile);
   }
   routeConfig() {
     this.appRoutes();
