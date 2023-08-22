@@ -18,6 +18,9 @@ class Routes {
     this.app
       .route("/deleteFile")
       .delete(authVerifyer, fileController.deleteFile);
+    this.app
+      .route("/uploadMultiple")
+      .post(authVerifyer, uploads.array("file"), fileController.uploadMultiple);
   }
   routeConfig() {
     this.appRoutes();

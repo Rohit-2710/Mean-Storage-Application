@@ -24,6 +24,33 @@ class FileController {
       res.status(500).json({ message: "Error occured while uploading file" });
     }
   }
+  async uploadMultiple(req, res) {
+    try {
+      const fileArray = req.files;
+      const data = fileArray.map((item) => {
+        let file = {};
+        const { originalname, buffer } = item;
+        file.file = buffer.toString("base64");
+        file.fileName = originalname;
+        file.fileType = originalname.split(".")[1];
+        file.email = req.email;
+        return file;
+      });
+      fileService
+        .uploadMultiple(data)
+        .then(() => {
+          res.status(204).json();
+        })
+        .catch(() => {
+          res.status(500).json({
+            message: "Error occured while uploading files",
+          });
+        });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ message: "Error occured while uploading files" });
+    }
+  }
   async getAllFiles(req, res) {
     try {
       const { email } = req.body;
