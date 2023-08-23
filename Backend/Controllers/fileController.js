@@ -26,6 +26,10 @@ class FileController {
   }
   async uploadMultiple(req, res) {
     try {
+      res.setHeader("Content-Type", "text/event-stream");
+      res.setHeader("Cache-Control", "no-cache");
+      res.setHeader("Connection", "keep-alive");
+      res.flushHeaders();
       const fileArray = req.files;
       const data = fileArray.map((item) => {
         let file = {};
@@ -36,16 +40,16 @@ class FileController {
         file.email = req.email;
         return file;
       });
-      fileService
-        .uploadMultiple(data)
-        .then(() => {
-          res.status(204).json();
-        })
-        .catch(() => {
-          res.status(500).json({
-            message: "Error occured while uploading files",
+      for (const element of data) {
+        fileService
+          .uploadMultiple([element])
+          .then(() => {
+            res.write(`data : ${element?.fileName} uploaded succesfully \n\n`);
+          })
+          .catch(() => {
+            res.write(`data : ${element?.fileName} upload failed \n\n`);
           });
-        });
+      }
     } catch (err) {
       console.log(err);
       res.status(500).json({ message: "Error occured while uploading files" });
@@ -96,7 +100,7 @@ class FileController {
         .catch((err) => {
           res
             .status(500)
-            .json({ message: "Error occured while deleting file in promise" });
+            .json({ message: "Error occured while deleting file" });
         });
     } catch (err) {
       res.status(500).json({ message: "Error occured while deleting file" });
