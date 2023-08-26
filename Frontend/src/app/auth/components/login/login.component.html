@@ -1,20 +1,71 @@
 <div class="login-container">
-  <mat-card class="card-container">
+  <mat-card class="card-container" [formGroup]="loginForm">
     <mat-card-content class="card-content">
       <mat-card-header class="header">
-        <h2>Welcome to login area</h2>
+        <h2 *ngIf="chosenType === 'Login'">Welcome to login area</h2>
+        <h2 *ngIf="chosenType === 'Sign In'">Welcome to Sign In area</h2>
       </mat-card-header>
       <mat-form-field appearance="fill" class="form-field">
         <mat-label for="name">Enter name</mat-label>
-        <input matInput="name" type="text" placeholder="Name" />
+        <input
+          matInput="name"
+          type="text"
+          placeholder="Name"
+          formControlName="name"
+        />
       </mat-form-field>
       <mat-form-field appearance="fill" class="form-field">
         <mat-label for="email">Enter email</mat-label>
-        <input matInput id="email" type="text" placeholder="Email" />
+        <input
+          matInput
+          id="email"
+          type="text"
+          placeholder="Email"
+          formControlName="email"
+        />
       </mat-form-field>
-      <button mat-raised-button color="primary" id="login" class="login-button">
-        <span>Login</span>
-      </button>
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label for="password">Enter password</mat-label>
+        <input
+          matInput
+          id="password"
+          type="text"
+          placeholder="Password"
+          formControlName="password"
+        />
+      </mat-form-field>
+      <div class="radio-buttons">
+        <mat-radio-group
+          [(ngModel)]="chosenType"
+          [ngModelOptions]="{ standalone: true }"
+        >
+          <mat-radio-button *ngFor="let val of type" [value]="val">{{
+            val
+          }}</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div class="buttons">
+        <button
+          mat-raised-button
+          color="primary"
+          id="login"
+          class="login-button"
+          *ngIf="chosenType === 'Login'"
+          (click)="loginUser()"
+        >
+          <span>Login</span>
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          id="login"
+          class="login-button"
+          *ngIf="chosenType === 'Sign In'"
+          (click)="signInUser()"
+        >
+          <span>Sign in</span>
+        </button>
+      </div>
     </mat-card-content>
   </mat-card>
 </div>

@@ -10,7 +10,9 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    redirectTo: './pages/home',
+    loadChildren: () =>
+      import('./pages/home/home.module').then((m) => m.HomeModule),
+    canLoad: [loginGuardGuard],
   },
 ];
 
